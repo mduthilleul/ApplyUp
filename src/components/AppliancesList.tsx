@@ -10,7 +10,6 @@ export const AppliancesList = () => {
         <h2 className="text-xl font-bold mb-2">{appliance.name}</h2>
         <p className="mb-1"><strong>Job:</strong> {appliance.job}</p>
         <p className="mb-1"><strong>Phone Number:</strong> {appliance.phoneNumber}</p>
-        <p><strong>Description:</strong> {appliance.description}</p>
       </div>
     ))}
   </div>;

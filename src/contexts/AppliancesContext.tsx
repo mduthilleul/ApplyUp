@@ -1,4 +1,4 @@
-import { createContext, PropsWithChildren, useContext, useState } from "react"
+import { createContext, PropsWithChildren, useContext, useEffect, useState } from "react"
 
 export type Appliance = {
     id: string
@@ -23,13 +23,22 @@ export const AppliancesContext = createContext<AppliancesContextType>({
 export const AppliancesProvider = ({children}: PropsWithChildren) => {
     const [appliances, setAppliances] = useState<Appliance[]>([])
 
+    useEffect(() => {
+        const storedAppliances = readAppliances();
+        setAppliances(storedAppliances);
+    }, [])
+
     return <AppliancesContext.Provider value={{
         appliances,
         addAppliance: (appliance: Appliance) => {
-            setAppliances([...appliances, appliance])
+            const newAppliances= [...appliances, appliance]
+            setAppliances(newAppliances)
+            storeAppliances(appliances)
         },
         removeAppliance: (id: string) => {
-            setAppliances(appliances.filter(a => a.id !== id))
+            const newAppliances = appliances.filter(a => a.id !== id);
+            setAppliances(newAppliances);
+            storeAppliances(appliances)
         }
     }}>
         {children}
@@ -38,4 +47,16 @@ export const AppliancesProvider = ({children}: PropsWithChildren) => {
 
 export const useAppliances = () => {
     return useContext(AppliancesContext);
+}
+
+const storeAppliances = (appliances: Appliance[]) => {
+    localStorage.setItem('appliances', JSON.stringify(appliances));
+} 
+
+const readAppliances = (): Appliance[] => {
+    const value = localStorage.getItem('appliances');
+    if(value) {
+        return JSON.parse(value) as Appliance[];
+    }
+    return [];
 }
