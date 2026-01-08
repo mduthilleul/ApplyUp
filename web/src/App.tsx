@@ -24,16 +24,16 @@ function App() {
 }
 
 const AppRoot = () => {
-  const [result, setResult] = useState("");
+  const [result, setResult] = useState<string[]>([]);
   const [error, setError] = useState<string>();
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("http://localhost:3000/");
-        const text = await response.text();
-        setResult(text);
+        const response = await fetch("http://localhost:3000/jobs");
+        const object = await response.json();
+        setResult(object);
       } catch (error) {
         setError("Error connecting to server");
       } finally {
@@ -45,7 +45,7 @@ const AppRoot = () => {
 
   return (
     <>
-      <span>{isLoading ? "Loading..." : result}</span>
+      <span>{isLoading ? "Loading..." : result.join(", ")}</span>
       {error && <span className="text-red-500">{error}</span>}
       <Header />
       <Routes>

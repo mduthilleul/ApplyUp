@@ -6,8 +6,8 @@ const app = express()
 app.use(cors()) // Enable CORS for all routes for dissmissing CORS errors during development
 app.use(express.json()) // Enabled to parse JSON request bodies
 
-app.get('/', (request, response) => {
-  response.send("Hello, World!")
+app.get('/jobs', (request, response) => {
+  response.json(['back', 'front'])
 })
 
 app.listen(3000, () =>  {
