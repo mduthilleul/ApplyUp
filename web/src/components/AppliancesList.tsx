@@ -4,6 +4,7 @@ import { useAppliances } from "../contexts/AppliancesContext";
 export const AppliancesList = () => {
   const { appliances, removeAppliance } = useAppliances();
 
+
   return (
     <div className="flex flex-col">
       {appliances.map((appliance) => (

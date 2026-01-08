@@ -3,8 +3,8 @@ import cors from 'cors';
 
 const app = express()
 
-app.use(cors())
-app.use(express.json())
+app.use(cors()) // Enable CORS for all routes for dissmissing CORS errors during development
+app.use(express.json()) // Enabled to parse JSON request bodies
 
 app.get('/', (request, response) => {
   response.send("Hello, World!")
